@@ -1,0 +1,15 @@
+subprojects {
+    apply plugin: 'java'
+    repositories { mavenCentral() }
+    java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
+    dependencies {
+        implementation files('.lift/algs4.jar')
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+    sourceSets {
+        main { java { srcDirs = ['.']; include '*.java' } }
+        test { java { srcDirs = ['tests'] } }
+    }
+    test { useJUnitPlatform() }
+}

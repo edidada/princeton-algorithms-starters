@@ -1,0 +1,2 @@
+rootProject.name = 'princeton-algorithms-labs'
+include 'percolation'
