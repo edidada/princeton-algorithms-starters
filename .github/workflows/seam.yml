@@ -1,0 +1,38 @@
+name: Princeton seam
+on:
+  push:
+    branches: [edidada/seam]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn --batch-mode verify
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - run: gradle --no-daemon test
+      - name: Original energy client and image output
+        working-directory: seam
+        run: |
+          java -cp target/classes:.lift/algs4.jar PrintEnergy 3x4.png | tee energy-cli.txt
+          grep -Fx 'image is 3 pixels wide by 4 pixels high.' energy-cli.txt
+          java -cp target/classes:target/test-classes:.lift/algs4.jar SeamRender HJocean.png | tee render.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seam-test-results
+          path: |
+            seam/target/surefire-reports/
+            seam/build/test-results/
+            seam/target/carved.png
+            seam/energy-cli.txt
+            seam/render.txt
