@@ -1,0 +1,39 @@
+name: Princeton boggle
+on:
+  push:
+    branches: [edidada/boggle]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn --batch-mode verify
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - run: gradle --no-daemon test
+      - name: Official CLI scores and throughput
+        working-directory: boggle
+        run: |
+          java -Xmx1g -cp target/classes:.lift/algs4.jar BoggleSolver dictionary-algs4.txt board4x4.txt | tee board4x4-cli.txt
+          grep -Fx 'Score = 33' board4x4-cli.txt
+          java -Xmx1g -cp target/classes:.lift/algs4.jar BoggleSolver dictionary-algs4.txt board-q.txt | tee board-q-cli.txt
+          grep -Fx 'Score = 84' board-q-cli.txt
+          java -Xmx1g -cp target/classes:target/test-classes:.lift/algs4.jar BoggleBenchmark | tee benchmark.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boggle-test-results
+          path: |
+            boggle/target/surefire-reports/
+            boggle/build/test-results/
+            boggle/*-cli.txt
+            boggle/benchmark.txt
