@@ -1,0 +1,40 @@
+name: Princeton 8puzzle
+on:
+  push:
+    branches: [edidada/8puzzle]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn --batch-mode verify
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - run: gradle --no-daemon test
+      - name: Original client and Solver CLI
+        working-directory: 8puzzle
+        run: |
+          java -cp target/classes:.lift/algs4.jar PuzzleChecker puzzle3x3-00.txt puzzle3x3-31.txt puzzle3x3-unsolvable.txt | tee original-client.txt
+          grep -Fx 'puzzle3x3-00.txt: 0' original-client.txt
+          grep -Fx 'puzzle3x3-31.txt: 31' original-client.txt
+          grep -Fx 'puzzle3x3-unsolvable.txt: -1' original-client.txt
+          java -cp target/classes:.lift/algs4.jar Solver puzzle04.txt | tee solver-cli.txt
+          grep -Fx 'Minimum number of moves = 4' solver-cli.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 8puzzle-test-results
+          path: |
+            8puzzle/target/surefire-reports/
+            8puzzle/build/test-results/
+            8puzzle/original-client.txt
+            8puzzle/solver-cli.txt
