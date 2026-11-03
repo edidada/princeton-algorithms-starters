@@ -1,0 +1,40 @@
+name: Princeton baseball
+on:
+  push:
+    branches: [edidada/baseball]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn --batch-mode verify
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - run: gradle --no-daemon test
+      - name: Official sample command-line clients
+        working-directory: baseball
+        run: |
+          java -cp target/classes:.lift/algs4.jar BaseballElimination teams4.txt | tee teams4-cli.txt
+          grep -Fx 'Atlanta is not eliminated' teams4-cli.txt
+          grep -Fx 'Philadelphia is eliminated by the subset R = { Atlanta New_York }' teams4-cli.txt
+          grep -Fx 'Montreal is eliminated by the subset R = { Atlanta }' teams4-cli.txt
+          java -cp target/classes:.lift/algs4.jar BaseballElimination teams5.txt | tee teams5-cli.txt
+          grep -Fx 'Detroit is eliminated by the subset R = { New_York Baltimore Boston Toronto }' teams5-cli.txt
+          java -cp target/classes:.lift/algs4.jar BaseballElimination teams12.txt | tee teams12-cli.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baseball-test-results
+          path: |
+            baseball/target/surefire-reports/
+            baseball/build/test-results/
+            baseball/*-cli.txt
