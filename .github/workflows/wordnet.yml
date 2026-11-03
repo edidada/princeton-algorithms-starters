@@ -1,0 +1,40 @@
+name: Princeton wordnet
+on:
+  push:
+    branches: [edidada/wordnet]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: mvn --batch-mode verify
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+      - run: gradle --no-daemon test
+      - name: Official sample command-line clients
+        working-directory: wordnet
+        run: |
+          printf '3 11\n9 12\n7 2\n1 6\n' | java -cp target/classes:.lift/algs4.jar SAP digraph1.txt | tee sap-cli.txt
+          grep -Fx 'length = 4, ancestor = 1' sap-cli.txt
+          grep -Fx 'length = -1, ancestor = -1' sap-cli.txt
+          java -cp target/classes:.lift/algs4.jar Outcast synsets.txt hypernyms.txt outcast5.txt outcast8.txt outcast11.txt | tee outcast-cli.txt
+          grep -Fx 'outcast5.txt: table' outcast-cli.txt
+          grep -Fx 'outcast8.txt: bed' outcast-cli.txt
+          grep -Fx 'outcast11.txt: potato' outcast-cli.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wordnet-test-results
+          path: |
+            wordnet/target/surefire-reports/
+            wordnet/build/test-results/
+            wordnet/*-cli.txt
