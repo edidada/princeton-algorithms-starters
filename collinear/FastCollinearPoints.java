@@ -4,8 +4,17 @@ import java.util.List;
 
 public class FastCollinearPoints {
     private final LineSegment[] result;
+    private static Point[] checked(Point[] points) {
+        if (points == null) throw new IllegalArgumentException("null array");
+        Point[] copy = points.clone();
+        for (Point p : copy) if (p == null) throw new IllegalArgumentException("null point");
+        Arrays.sort(copy);
+        for (int i = 1; i < copy.length; i++)
+            if (copy[i-1].compareTo(copy[i]) == 0) throw new IllegalArgumentException("duplicate point");
+        return copy;
+    }
     public FastCollinearPoints(Point[] points) {
-        Point[] sorted = BruteCollinearPoints.checked(points);
+        Point[] sorted = checked(points);
         Point[] bySlope = sorted.clone();
         List<LineSegment> found = new ArrayList<>();
         for (Point origin : sorted) {

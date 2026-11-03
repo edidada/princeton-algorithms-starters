@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BruteCollinearPoints {
     private final LineSegment[] result;
-    static Point[] checked(Point[] points) {
+    private static Point[] checked(Point[] points) {
         if (points == null) throw new IllegalArgumentException("null array");
         Point[] copy = points.clone();
         for (Point p : copy) if (p == null) throw new IllegalArgumentException("null point");

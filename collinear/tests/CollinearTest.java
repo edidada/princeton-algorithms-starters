@@ -75,7 +75,7 @@ class CollinearTest {
     @Test void longLineMaximalityAndBruteFourTuples() {
         Point[] p=new Point[7];for(int i=0;i<7;i++)p[i]=new Point(i,2*i);
         assertEquals(Set.of("(0, 0) -> (6, 12)"),strings(new FastCollinearPoints(p).segments()));
-        // Brute specification permits subsegments when five or more points are collinear.
+        // Official Brute inputs exclude five or more collinear points; record extended behavior.
         assertEquals(35,new BruteCollinearPoints(p).numberOfSegments());
     }
 }
