@@ -1,0 +1,73 @@
+{
+  "publication_kind": "official-archive-import",
+  "imported_at": "2026-11-02",
+  "evidence": "https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php",
+  "archives": [
+    {
+      "directory": "hello",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/hello/hello.zip",
+      "sha256": "257a17cace8461a834318feb5ca1cf1c3f658b4c5f52975db5597625b55aae83",
+      "bytes": 1523295
+    },
+    {
+      "directory": "percolation",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/percolation/percolation.zip",
+      "sha256": "b40ebae60155ea9672d9930e9fbfa665ed9cba5dfc5a904d4dffd0ffc8c7aaf4",
+      "bytes": 2482486
+    },
+    {
+      "directory": "queues",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/queues/queues.zip",
+      "sha256": "a39fcb7ef605a96d30f544fa41ff84f093e56aa06e5a4fce8255c8622268be1c",
+      "bytes": 1745523
+    },
+    {
+      "directory": "collinear",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/collinear/collinear.zip",
+      "sha256": "262a163691a75ffac76a3a4c25bd1643ab1858a01c235c1187a6ecf51b28beca",
+      "bytes": 1737702
+    },
+    {
+      "directory": "8puzzle",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/8puzzle/8puzzle.zip",
+      "sha256": "153cc3f015d91c3378dbb5b4effa0a114e544a2eb91a37ab177002d88fb9ac4b",
+      "bytes": 1485877
+    },
+    {
+      "directory": "kdtree",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/kdtree/kdtree.zip",
+      "sha256": "f041e1611be23b2536f88f9b49a0ed1bd1386a610f86ca356197da82bc338fdc",
+      "bytes": 21675240
+    },
+    {
+      "directory": "wordnet",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/wordnet/wordnet.zip",
+      "sha256": "dc7eb3283a2ed734004e05e53c7f0c67949d728a365a2694587c7dfaeca09156",
+      "bytes": 11048452
+    },
+    {
+      "directory": "seam",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/seam/seam.zip",
+      "sha256": "ca389626ef575ffde8715b377142409783149e531fa0284dea8f45302b16212d",
+      "bytes": 2464836
+    },
+    {
+      "directory": "baseball",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/baseball/baseball.zip",
+      "sha256": "e4927719bb1b83acebb6734a72e5e1c4962136a122bdb4c387e002342c965fbb",
+      "bytes": 1302326
+    },
+    {
+      "directory": "boggle",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/boggle/boggle.zip",
+      "sha256": "bac07fc7086e404b842c4605c87415ef3e81a59819e22d660463057baa99ab79",
+      "bytes": 5204816
+    },
+    {
+      "directory": "burrows",
+      "url": "https://coursera.cs.princeton.edu/algs4/assignments/burrows/burrows.zip",
+      "sha256": "fd01fa5934a9f746531d95b58a04aa9128a7d69b26f1119b96a45697f258a533",
+      "bytes": 3481858
+    }
+  ]
+}
